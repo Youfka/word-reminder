@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width">
+  <title>Work reminder</title>
+  <body>
+    <h1>Work reminder</h1>
+<div class="wrapper">
+  <div class="left-side">
+    <div class="add">
+      <button class="add-button">Add task</button>
+    </div>
+  </div>
+  <div class="right-side">
+    <h2>Your tasks</h2>
+    <table class="tasks">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Task time</th>
+          <th>Deadline</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+<div class="popup add-popup hidden">
+  <div class="row">
+    <input class="name" type="text" placeholder="name">
+  </div>
+  <div class="row"> <span>Task time</span>
+    <input class="time" type="time" value="01:00">
+  </div>
+  <div class="row"> <span>Deadline</span>
+    <input class="dl-date" type="date">
+    <input class="dl-time" type="time">
+  </div>
+  <button class="add-work">Ok</button>
+  <button class="cancel">Cancel</button>
+</div>
+<div class="popup check-done hidden">
+  <div class="row">
+    <div class="question">Have you done?</div>
+  </div>
+  <div class="row"> 
+    <input class="time hidden" type="text" value="10">
+  </div>
+  <button class="confirm-done">Yes</button>
+  <button class="not-done">No</button>
+</div>
+  <script src="main.min.js"></script></body>
+</html>

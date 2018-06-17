@@ -1,0 +1,52 @@
+.wrapper
+	.left-side
+		//- .mode
+		//- 	h2 Choose work mode
+		//- 	button.pomodoro Pomodoro
+		//- 	button.relax Custom
+
+		.add
+			button.add-button Add task
+
+
+	.right-side
+		h2 Your tasks
+		table.tasks
+			thead
+				tr
+					th Name
+					th Task time
+					th Deadline
+					th Action
+			tbody
+			
+
+
+- let dl_date = new Date();
+
+	.popup.add-popup.hidden
+		.row
+			input.name(type="text" placeholder="name")
+		.row 
+			span Task time
+			input.time(type="time" value="01:00")
+		.row 
+			span Deadline
+			input.dl-date(type="date") 
+			input.dl-time(type="time")
+		button.add-work Ok
+		button.cancel Cancel
+
+
+	.popup.check-done.hidden
+		.row
+			div.question Have you done?
+		.row 
+			input.time.hidden(type="text" value="10")
+		button.confirm-done Yes
+		button.not-done No
+
+		
+
+
+

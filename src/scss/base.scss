@@ -1,0 +1,82 @@
+$yellow: #fff7de;
+
+body {
+	margin: 0;
+	padding: 0;
+	background: $yellow;
+}
+
+input {
+    font-family: "Lato";
+    font-size: 1rem;
+    padding: 6px;
+    border: 1px solid #b6b1d1;
+    margin-left: 10px;
+}
+
+button {
+	font-family: "Lato";
+    font-size: 1rem;
+    padding: 6px 10px;
+}
+.darken {
+	background-color: #dcc26d;
+}
+.wrapper {
+	display: flex;
+    flex-wrap: wrap;
+    padding: 20px;	
+}
+
+.left-side {
+	min-width: 30%;
+}
+.right-side {
+	width: 70%;
+}
+
+.hidden {
+	display: none;
+}
+.add {
+	margin: 20px 0;
+}
+.popup {
+	position: absolute;
+	top: 30%;
+	left: 30%;
+	background-color: #fff0c0;
+	border: 1px solid #b6b1d1;
+	padding: 20px;
+}
+.add-popup {
+	width: 400px;
+	text-align: right;
+	.name {
+		width: 90%;
+	}
+}
+.row {
+	margin: 10px 0;
+}
+.tasks {
+	td,th {
+		padding: 10px;
+		border: 1px solid #b6b1d1;
+		text-align: center;
+	}
+}
+.done {
+	background-color: green;
+}
+.failed {
+	background-color: red;
+}
+.paused {
+	background-color: orange;
+}
+
+.check-done {
+	width: 400px;
+	text-align: center;
+}
