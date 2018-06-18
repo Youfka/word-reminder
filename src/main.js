@@ -40,9 +40,6 @@ function main() {
 			return;
 		}
 
-		console.log(new Date(time_date));
-		console.log(new Date(task.deadline_date));
-
 		document.querySelector('body').classList.remove("darken");
 		document.querySelector('.add-popup').classList.add("hidden");
 
@@ -124,19 +121,9 @@ function main() {
 				      }
 				    }
 				    if(hours.toString()==0 && minutes.toString()==0) {
-			      		let taskCompleted = confirm('Have you done '+name+'?');
-			      		if(taskCompleted) {
-			      			clearInterval(interval);
-			      			display.innerHTML = 'Done!';
-			      			display.nextElementSibling.innerHTML = "Done!"
-			      			display.parentNode.classList.add("done"); 
-			      			display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
-							display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);
-			      			return true;
-			      		} else {
-			      			let extendTime = prompt('How many minutes do you need?', '10');
-			      			minutes = extendTime;
-			      		}
+			      		outOfTimeModal(display,name);
+		      			clearInterval(interval);
+		      			return true;
 			    	}
 				      if(hours < 10 && hours.toString().length < 2) {hours = "0"+hours;}
 				      if(minutes < 10 && minutes.toString().length < 2) {minutes = "0"+minutes;}
@@ -172,28 +159,7 @@ function main() {
 					return true;
 				} else {
 					if(d_date <= now){
-						let deadlinePassed = confirm('DEADLINE! Have you done '+name+'?');
-						if(deadlinePassed) {
-							console.log(display);
-							display.innerHTML ="Done!";
-							display.previousElementSibling.innerHTML = 'Done!';
-							display.parentNode.classList.add("done");
-							display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
-							display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);
-						} else {
-							/*if(display.parentNode.classList.contains("paused")){
-								display.parentNode.classList.remove("paused");
-							}*/
-							console.log(display);
-							display.innerHTML ="Overdue!";
-							display.parentNode.classList.add("failed");
-							/*let extendDeadline = prompt('Сколько минут ещё нужно?', '0');
-			      			d_date.setMinutes(now.getMinutes() + Number.parseInt(extendDeadline));
-			      			let month = (d_date.getMonth()+1) > 9 ? (d_date.getMonth()+1) : "0"+(d_date.getMonth()+1);
-			      			let date = d_date.getDate() > 9 ? d_date.getDate() : "0"+d_date.getDate();
-			      			console.log(month);
-			      			display.innerHTML = d_date.getDate() + "." + month + "." + d_date.getFullYear() + " " + d_date.getHours() + ":" + d_date.getMinutes();*/
-						}
+						deadlineModal(display,name);
 						clearInterval(dead_interval);
 						return;
 					} 
@@ -210,32 +176,67 @@ function main() {
 			alert('Task cancelled!'); 
 		}
 	}
+	function doneTask(display){
+		display.innerHTML = 'Done!';
+		console.log(display.nextElementSibling);
+		if(display.nextElementSibling) {
+			display.nextElementSibling.innerHTML = "Done!";
+		} else {
+			display.previousElementSibling.innerHTML = 'Done!';
+		}
+		display.parentNode.classList.add("done"); 
+		display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
+		display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);					
+	}
 
-	function checkDeadlineModal(){
+	function outOfTimeModal(time_display,name){
 		document.querySelector('body').classList.add("darken");
 		document.querySelector('.check-done').classList.remove("hidden");
-		document.querySelector('.time').classList.add("hidden");
-		document.querySelector('.question').innerHTML = "Have you done?";
+		document.querySelector('.not-done').classList.remove("hidden");
+		document.querySelector('.more_time').classList.add("hidden");
+		document.querySelector('.question').innerHTML = `Have you done ${name}?`;
 		let confirm_done = function(){
 			document.querySelector('body').classList.remove("darken");
 			document.querySelector('.check-done').classList.add("hidden");
+			doneTask(time_display);
+			return true;
+		}
+		let set_new_time = function(){
+			document.querySelector('body').classList.remove("darken");
+			document.querySelector('.check-done').classList.add("hidden");
+			startTimer(document.querySelector('.more_time').value,time_display,name);
+		}
+		document.querySelector('.confirm-done').removeEventListener('click',set_new_time);
+		document.querySelector('.confirm-done').addEventListener('click',confirm_done);
+
+		document.querySelector('.not-done').addEventListener('click',function(){
+			document.querySelector('.question').innerHTML = "How much time do you need?";
+			document.querySelector('.more_time').classList.remove("hidden");
+			this.classList.add("hidden");
+			document.querySelector('.confirm-done').removeEventListener('click',confirm_done);
+			document.querySelector('.confirm-done').addEventListener('click',set_new_time);
+		});
+	}
+
+	function deadlineModal(deadline_display,name){
+		document.querySelector('body').classList.add("darken");
+		document.querySelector('.check-done').classList.remove("hidden");
+		document.querySelector('.not-done').classList.remove("hidden");
+		document.querySelector('.more_time').classList.add("hidden");
+		document.querySelector('.question').innerHTML = `DEADLINE! Have you finished ${name}?`;
+		let confirm_done = function(){
+			document.querySelector('body').classList.remove("darken");
+			document.querySelector('.check-done').classList.add("hidden");
+			doneTask(deadline_display);
 			return true;
 		}
 		document.querySelector('.confirm-done').addEventListener('click',confirm_done);
 
 		document.querySelector('.not-done').addEventListener('click',function(){
-			document.querySelector('.question').innerHTML = "How many minutes do you need?";
-			document.querySelector('.time').classList.remove("hidden");
-			this.classList.add("hidden");
+			deadline_display.innerHTML ="Overdue!";
+			deadline_display.parentNode.classList.add("failed");
 			document.querySelector('.confirm-done').removeEventListener('click',confirm_done);
-			document.querySelector('.confirm-done').addEventListener('click',function(){
-				this.innerHTML = "Confirm";
-				document.querySelector('body').classList.remove("darken");
-				document.querySelector('.check-done').classList.add("hidden");
-				return document.querySelector('.time').innerHTML;
-			});
 		});
-
 	}
 	
 	
