@@ -1,24 +1,23 @@
 const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
 let conf = {
 	entry: './src/index.js',
 	output: {
-		path: path.resolve(__dirname, './dist'),
+		path: path.resolve(__dirname, 'dist'),
 		filename: 'main.min.js'
 	},
 	devServer: {
-		contentBase: path.join(__dirname, "dist"),
-		overlay: true,
-		watchContentBase: true,
-		publicPath: path.join(__dirname, "dist")
+		contentBase: path.resolve(__dirname, 'dist'),
+		inline: true,
+		overlay: true
 	},
 	module: {
 		rules: [
 			{
 				test: /\.js$/,
-				use: ["source-map-loader", "babel-loader"],
+				loader: 'babel-loader',
 				exclude: '/node_modules/'
 			},
 			{
@@ -54,10 +53,8 @@ let conf = {
     	new HtmlWebpackPlugin({
     		template: path.resolve(__dirname, './src/index.pug')
     	}),
-    	new ExtractTextPlugin({
-    		filename: "style.css",
-    		disable: process.env.NODE_ENV !== 'production'
-    	})
+    	new ExtractTextPlugin("style.css"),
+    	new webpack.HotModuleReplacementPlugin()
   	]
 };
 
