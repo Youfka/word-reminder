@@ -45,7 +45,10 @@ let conf = {
 						}
 					}
 				] 
-				
+			},
+			{
+				test: /\.mp3$/,
+        		loader: 'file-loader'
 			}
 		]
 	},

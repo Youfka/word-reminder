@@ -57,13 +57,6 @@ function main() {
 		//start timers
 		startTimer(task.time,time_cell,task.name);
 		checkDeadline(task.deadline_date,deadline_cell,task.name);
-		/*let now = new Date();
-		let countDownTime = now.getHours()+now.setHours(now.getHours() + Number.parseInt(task.time.substring(0,2)),now.getMinutes() + Number.parseInt(task.time.substring(3)));
-		let countDownDate = new Date(task.deadline_date);
-
-		setInterval(function () {
-			document.querySelector('table tbody td:nth-child(2)').innerHTML = new Date(countDownTime - Date.parse(now)).getHours() + ":" + new Date(countDownTime - Date.parse(now)).getMinutes();
-		}, 1000);*/
 
 		//cancel task
 		let cancel_buttons = document.querySelectorAll('.cancel-task');
@@ -81,10 +74,8 @@ function main() {
 			  	tr.classList.toggle('paused'); 
 				if(tr.classList.contains("paused")){
 				    this.innerHTML = "Resume";
-				    //tr.classList.add("paused");
 			  	} else { 
 				    this.innerHTML = "Pause";
-				    //tr.classList.remove("paused");
 				    startTimer(time_cell.innerHTML,time_cell,name);
 			  	}
 			});
@@ -152,11 +143,7 @@ function main() {
 			let now = new Date();
 			if(display.previousElementSibling) {
 				if(display.parentNode.classList.contains("done")) {
-					display.innerHTML ="Done!";
-					display.parentNode.classList.add("done");
-					display.nextElementSibling.innerHTML = '<button class="cancel-task">Remove</button>';
-					display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);
-					return true;
+					doneTask(display);
 				} else {
 					if(d_date <= now){
 						deadlineModal(display,name);
@@ -186,10 +173,16 @@ function main() {
 		}
 		display.parentNode.classList.add("done"); 
 		display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
-		display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);					
+		display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);
+		let success_sound = require('./sounds/success_sound.mp3');
+		let sound = new Audio(success_sound);
+	    sound.play();		
 	}
 
 	function outOfTimeModal(time_display,name){
+		let question_sound = require('./sounds/question_sound.mp3');
+		let sound = new Audio(question_sound);
+   		sound.play();
 		document.querySelector('body').classList.add("darken");
 		document.querySelector('.check-done').classList.remove("hidden");
 		document.querySelector('.not-done').classList.remove("hidden");
@@ -219,6 +212,9 @@ function main() {
 	}
 
 	function deadlineModal(deadline_display,name){
+		let deadline_sound = require('./sounds/deadline_sound.mp3');
+		let sound = new Audio(deadline_sound);
+		sound.play();
 		document.querySelector('body').classList.add("darken");
 		document.querySelector('.check-done').classList.remove("hidden");
 		document.querySelector('.not-done').classList.remove("hidden");
