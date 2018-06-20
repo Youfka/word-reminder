@@ -2,7 +2,9 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-let conf = {
+let conf = [
+{
+	name: 'client',
 	entry: './src/index.js',
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -54,12 +56,22 @@ let conf = {
 	},
 	plugins: [
     	new HtmlWebpackPlugin({
-    		template: path.resolve(__dirname, './src/index.pug')
+    		template: path.resolve(__dirname, './src/views/index.pug')
     	}),
     	new ExtractTextPlugin("style.css"),
     	new webpack.HotModuleReplacementPlugin()
   	]
-};
+},
+{
+    name: 'server',
+    entry: './src/server.js',
+    target: 'node',
+    output: {
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'main.min.js'
+	}
+}
+];
 
 module.exports = (env, options) => {
 	let production = options.mode === 'production';

@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production --watch",
-    "dev": "webpack-dev-server --mode development --open --watch"
+    "dev-server": "webpack-dev-server --mode development --open --watch",
+    "start": "node src/server.js",
+    "dev": "webpack --mode development && npm start --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -30,5 +32,7 @@
     "sockjs-client": "^1.1.4"
   },
   "description": "this is an app for workers",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
