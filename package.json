@@ -6,7 +6,7 @@
     "build": "webpack --mode production --watch",
     "dev-server": "webpack-dev-server --mode development --open --watch",
     "start": "node src/server.js",
-    "dev": "webpack --mode development && npm start --mode development"
+    "dev": "webpack --mode production && npm start --mode production"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-latest": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -24,12 +25,13 @@
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "sass-loader": "^7.0.2",
+    "sockjs-client": "^1.1.4",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.2",
     "webpack-cli": "^3.0.1",
-    "webpack-dev-server": "^3.1.4",
-    "sockjs-client": "^1.1.4"
+    "webpack-dev-middleware": "^3.1.3",
+    "webpack-hot-middleware": "^2.22.2"
   },
   "description": "this is an app for workers",
   "dependencies": {

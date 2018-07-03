@@ -171,12 +171,14 @@ function main() {
 		} else {
 			display.previousElementSibling.innerHTML = 'Done!';
 		}
-		display.parentNode.classList.add("done"); 
-		display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
-		display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);
 		let success_sound = require('./sounds/success_sound.mp3');
 		let sound = new Audio(success_sound);
-	    sound.play();		
+		if(!display.parentNode.classList.contains("done")) {
+		    sound.play();
+		}
+		display.parentNode.classList.add("done"); 
+		display.parentNode.lastElementChild.innerHTML = '<button class="cancel-task">Remove</button>';
+		display.parentNode.querySelector(".cancel-task").addEventListener('click',removeTask);		
 	}
 
 	function outOfTimeModal(time_display,name){

@@ -2,17 +2,23 @@ const path = require('path');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
-let conf = [
-{
+
+let conf = {
+	target: 'web',
 	name: 'client',
-	entry: './src/index.js',
+	devtool: 'source-map',
+	entry: [
+		'webpack-hot-middleware/client',
+		'./src/index.js'
+	],
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'main.min.js'
+		filename: 'main.min.js',
+		publicPath: "/dist"
 	},
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
-		inline: true,
+		inline: false,
 		overlay: true
 	},
 	module: {
@@ -20,7 +26,8 @@ let conf = [
 			{
 				test: /\.js$/,
 				loader: 'babel-loader',
-				exclude: '/node_modules/'
+				exclude: '/node_modules/',
+				query: {compact: false}
 			},
 			{
 				test: /\.scss$/,
@@ -59,22 +66,13 @@ let conf = [
     		template: path.resolve(__dirname, './src/views/index.pug')
     	}),
     	new ExtractTextPlugin("style.css"),
-    	new webpack.HotModuleReplacementPlugin()
+    	new webpack.HotModuleReplacementPlugin(),
+    	new webpack.NoEmitOnErrorsPlugin()
   	]
-},
-{
-    name: 'server',
-    entry: './src/server.js',
-    target: 'node',
-    output: {
-		path: path.resolve(__dirname, 'dist'),
-		filename: 'main.min.js'
-	}
-}
-];
-
-module.exports = (env, options) => {
+};
+module.exports = conf;
+/*module.exports = (env, options) => {
 	let production = options.mode === 'production';
 	conf.devtool = production ? 'source-map' : 'eval-sourcemap';
 	return conf;
-}
+}*/
